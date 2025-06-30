@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Training Letter Generator - Garment Textile Pvt. Ltd.</title>
+    <title>Industrial Training Letter Generator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+        }
+        
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,10 +23,10 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            min-height: 100vh;
-            padding: 20px;
+            background-color: #f5f7fa;
             color: #333;
+            line-height: 1.6;
+            padding: 20px;
         }
         
         .container {
@@ -31,38 +38,17 @@
         }
         
         header {
-            background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 12px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #3498db, #27ae60);
+            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
         header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.6;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
         }
         
         .content {
@@ -73,265 +59,170 @@
         
         .form-container {
             flex: 1;
-            min-width: 350px;
+            min-width: 300px;
             background: white;
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
         
         .preview-container {
             flex: 1;
-            min-width: 350px;
+            min-width: 300px;
             background: white;
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             display: flex;
             flex-direction: column;
         }
         
         h2 {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: #2c3e50;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #3498db;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        h2 i {
-            color: #3498db;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
         }
         
         .form-group {
-            margin-bottom: 25px;
-            position: relative;
+            margin-bottom: 20px;
         }
         
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--dark);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        
+        .radio-option {
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        label i {
-            color: #3498db;
-            width: 20px;
-            text-align: center;
-        }
-        
-        input, select {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #e1e5eb;
-            border-radius: 8px;
-            font-size: 1.05rem;
-            transition: all 0.3s;
-            background: #f8f9fa;
-        }
-        
-        input:focus, select:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.2);
-            background: white;
-        }
-        
-        .accommodation-options {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 10px;
-            border: 2px dashed #e1e5eb;
-        }
-        
-        .accommodation-option {
-            margin-bottom: 15px;
-            padding: 12px;
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: var(--secondary);
+            color: white;
+            border: none;
             border-radius: 6px;
-            transition: background 0.3s;
-        }
-        
-        .accommodation-option:hover {
-            background: #edf2f7;
-        }
-        
-        .accommodation-option:last-child {
-            margin-bottom: 0;
-        }
-        
-        .accommodation-option label {
-            display: flex;
-            align-items: center;
-            font-weight: normal;
             cursor: pointer;
-            margin-bottom: 0;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
         }
         
-        .accommodation-option input {
-            width: auto;
-            margin-right: 12px;
-            height: 18px;
-            width: 18px;
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
-        .btn-group {
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-download {
+            background: var(--success);
+        }
+        
+        .btn-download:hover {
+            background: #219653;
+        }
+        
+        .letter-preview {
+            flex: 1;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            overflow: auto;
+            font-family: Arial, sans-serif;
+            font-size: 8pt;
+            line-height: 1.5;
+        }
+        
+        .letter-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .letter-header h3 {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #000;
+            margin: 15px 0;
+        }
+        
+        .letter-date {
+            text-align: right;
+            font-style: italic;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .letter-content p {
+            margin-bottom: 10px;
+        }
+        
+        .letter-signature {
+            margin-top: 20px;
+        }
+        
+        .note {
+            font-style: italic;
+            margin-top: 15px;
+            font-size: 7pt;
+        }
+        
+        b {
+            font-weight: bold;
+        }
+        
+        i {
+            font-style: italic;
+        }
+        
+        .actions {
             display: flex;
             gap: 15px;
             margin-top: 20px;
         }
         
-        button {
-            flex: 1;
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            color: white;
-            border: none;
-            padding: 16px 25px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
-        }
-        
-        button:active {
-            transform: translateY(1px);
-        }
-        
-        #downloadBtn {
-            background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
-            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
-        }
-        
-        #downloadBtn:hover {
-            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
-        }
-        
-        .preview-content {
-            flex: 1;
-            border: 2px solid #e1e5eb;
-            border-radius: 8px;
-            padding: 0;
-            overflow: auto;
-            background: #fcfdfe;
-            font-size: 14px;
-            line-height: 1.6;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
-        }
-        
-        .letter {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px;
-            background: white;
-        }
-        
-        .letter-header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #e1e5eb;
-        }
-        
-        .letter-header h3 {
-            font-size: 24px;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .letter-header p {
-            margin: 5px 0;
-            color: #555;
-            line-height: 1.5;
-        }
-        
-        .letter-body {
-            margin-bottom: 30px;
-        }
-        
-        .letter-body p {
-            margin-bottom: 15px;
-            line-height: 1.7;
-        }
-        
-        .letter-body ul {
-            margin: 20px 0 20px 40px;
-        }
-        
-        .letter-body ul li {
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-        
-        .signature {
-            margin-top: 40px;
-        }
-        
-        .signature p {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        
-        .note {
-            font-style: italic;
-            color: #777;
-            margin-top: 30px;
-            font-size: 13px;
-            text-align: center;
-            padding-top: 15px;
-            border-top: 1px dashed #ddd;
-        }
-        
         footer {
             text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 14px;
             margin-top: 30px;
-            padding: 25px;
-            background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
-            color: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        footer p {
-            margin: 8px 0;
-            font-size: 1.1rem;
-        }
-        
-        .logo {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        
-        .logo-circle {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 40px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
         @media (max-width: 768px) {
@@ -339,11 +230,7 @@
                 flex-direction: column;
             }
             
-            header h1 {
-                font-size: 2.2rem;
-            }
-            
-            .btn-group {
+            .actions {
                 flex-direction: column;
             }
         }
@@ -352,259 +239,238 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">
-                <div class="logo-circle">
-                    <i class="fas fa-file-contract"></i>
-                </div>
-            </div>
-            <h1>Garment Textile Private Limited</h1>
-            <p>Training Letter Generator - Create professional training letters in PDF format</p>
+            <h1>Industrial Training Letter Generator</h1>
+            <p>Generate professional training letters in PDF format</p>
         </header>
         
         <div class="content">
             <div class="form-container">
-                <h2><i class="fas fa-edit"></i> Training Details</h2>
+                <h2>Trainee Information</h2>
                 <form id="trainingForm">
                     <div class="form-group">
-                        <label for="letterDate"><i class="fas fa-calendar"></i> Letter Date:</label>
-                        <input type="date" id="letterDate" required>
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Enter trainee's full name" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="name"><i class="fas fa-user"></i> Full Name:</label>
-                        <input type="text" id="name" placeholder="Enter candidate's full name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="fatherName"><i class="fas fa-user-friends"></i> Father's Name:</label>
+                        <label for="fatherName">Father's Name</label>
                         <input type="text" id="fatherName" placeholder="Enter father's name" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="email"><i class="fas fa-envelope"></i> Email Address:</label>
+                        <label for="email">Email Address</label>
                         <input type="email" id="email" placeholder="Enter email address" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="contactNumber"><i class="fas fa-phone"></i> Contact Number:</label>
-                        <input type="tel" id="contactNumber" placeholder="Enter phone number" required>
+                        <label for="contactNumber">Contact Number</label>
+                        <input type="tel" id="contactNumber" placeholder="Enter contact number" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="reportingDate"><i class="fas fa-calendar-check"></i> Reporting Date:</label>
+                        <label for="reportingDate">Reporting Date</label>
                         <input type="date" id="reportingDate" required>
                     </div>
                     
                     <div class="form-group">
-                        <label><i class="fas fa-bed"></i> Accommodation Option:</label>
-                        <div class="accommodation-options">
-                            <div class="accommodation-option">
-                                <label>
-                                    <input type="radio" name="accommodation" value="basic" id="basicOption">
-                                    Basic Accommodation (PG room at ₹2,750/month)
-                                </label>
+                        <label>Accommodation</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="accommodationBasic" name="accommodation" value="Basic">
+                                <label for="accommodationBasic">Basic</label>
                             </div>
-                            <div class="accommodation-option">
-                                <label>
-                                    <input type="radio" name="accommodation" value="none" id="noneOption" checked>
-                                    No Accommodation Needed (₹700 administrative fee)
-                                </label>
+                            <div class="radio-option">
+                                <input type="radio" id="accommodationNone" name="accommodation" value="None" checked>
+                                <label for="accommodationNone">None</label>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="btn-group">
-                        <button type="button" id="previewBtn">
-                            <i class="fas fa-eye"></i> Preview Letter
-                        </button>
-                        <button type="button" id="downloadBtn">
-                            <i class="fas fa-download"></i> Download PDF
-                        </button>
-                    </div>
+                    <button type="button" id="previewBtn" class="btn">Preview Letter</button>
                 </form>
             </div>
             
             <div class="preview-container">
-                <h2><i class="fas fa-file-pdf"></i> Letter Preview</h2>
-                <div class="preview-content">
-                    <div id="letterPreview" class="letter">
-                        <!-- Preview content will be generated here -->
-                        <div style="text-align: center; padding: 40px; color: #777;">
-                            <i class="fas fa-file-alt" style="font-size: 60px; margin-bottom: 20px; color: #e1e5eb;"></i>
-                            <h3>Training Letter Preview</h3>
-                            <p>Fill out the form and click "Preview Letter" to generate your training letter</p>
-                        </div>
-                    </div>
+                <h2>Letter Preview</h2>
+                <div class="letter-preview" id="letterPreview">
+                    <!-- Preview will be generated here -->
+                </div>
+                <div class="actions">
+                    <button id="downloadBtn" class="btn btn-download">Download as PDF</button>
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>Garment Textile Private Limited | Soyepur Bazar, Pandeypur, Varanasi, Uttar Pradesh 221007</p>
-            <p>+91 79707 74361 | garmenttxtpvtltd@hotmail.com</p>
+            <p>© 2023 Garment Textile Private Limited | System Generated Training Letters</p>
         </footer>
     </div>
 
     <script>
-        // Set today's date as default for letter and reporting date
+        // Initialize current date
         document.addEventListener('DOMContentLoaded', function() {
+            // Set reporting date to next Monday as default
             const today = new Date();
-            const formattedDate = today.toISOString().split('T')[0];
+            const nextMonday = new Date(today);
+            nextMonday.setDate(today.getDate() + (1 + 7 - today.getDay()) % 7);
+            document.getElementById('reportingDate').valueAsDate = nextMonday;
             
-            // Set letter date to today
-            document.getElementById('letterDate').value = formattedDate;
-            
-            // Set reporting date to 7 days from today
-            const reportingDate = new Date();
-            reportingDate.setDate(today.getDate() + 7);
-            document.getElementById('reportingDate').value = reportingDate.toISOString().split('T')[0];
-            
-            // Set up event listeners
-            document.getElementById('previewBtn').addEventListener('click', generatePreview);
-            document.getElementById('downloadBtn').addEventListener('click', downloadPDF);
+            // Generate initial preview
+            updatePreview();
         });
         
-        function generatePreview() {
-            // Get form values
-            const letterDate = document.getElementById('letterDate').value;
-            const name = document.getElementById('name').value;
-            const fatherName = document.getElementById('fatherName').value;
-            const email = document.getElementById('email').value;
-            const contactNumber = document.getElementById('contactNumber').value;
-            const reportingDate = document.getElementById('reportingDate').value;
+        // Update preview when form changes
+        document.getElementById('trainingForm').addEventListener('input', updatePreview);
+        document.getElementById('previewBtn').addEventListener('click', updatePreview);
+        
+        // Function to update preview
+        function updatePreview() {
+            const name = document.getElementById('name').value || 'John Doe';
+            const fatherName = document.getElementById('fatherName').value || 'Robert Doe';
+            const email = document.getElementById('email').value || 'john.doe@example.com';
+            const contactNumber = document.getElementById('contactNumber').value || '+91 98765 43210';
+            const reportingDate = document.getElementById('reportingDate').valueAsDate || new Date();
             
-            // Get accommodation option
+            // Format reporting date
+            const formattedReportingDate = reportingDate.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            
+            // Get current date and time
+            const now = new Date();
+            const formattedDateTime = now.toLocaleString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            }).toUpperCase();
+            
+            // Determine accommodation text
             let accommodationText = '';
-            if (document.getElementById('basicOption').checked) {
+            const accommodation = document.querySelector('input[name="accommodation"]:checked').value;
+            if (accommodation === 'Basic') {
                 accommodationText = 'If you do not have a place to stay in Varanasi during the training period, then we can arrange a personal PG room at a Minimal Charge of ₹2,750.';
             } else {
                 accommodationText = 'You have not opted for any accommodation. A ₹700 training facility and administrative fee will apply.';
             }
             
-            // Format dates
-            const formattedLetterDate = formatDate(letterDate);
-            const formattedReportingDate = formatDate(reportingDate);
-            
-            // Generate the letter HTML to match the desired PDF format
+            // Generate the letter HTML
             const letterHTML = `
-                <div class="letter-header">
-                    <h3>Garment Textile Private Limited</h3>
-                    <p>Soyepur Bazar, Pandeypur, Varanasi, Uttar Pradesh</p>
-                    <p><strong>221007</strong></p>
-                    <p>+91 95194 43625  garmenttxipyttld@hotmail.com</p>
+                <div class="letter">
+                    <div class="letter-header">
+                        <h3>Garment Textile Private Limited</h3>
+                        <div>Soyepur Bazar, Pandeypur, Varanasi, Uttar Pradesh</div>
+                        <b>221007</b>
+                        <div>+91 79707 74361  garmenttxtpvtltd@hotmail.com</div>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="letter-date">
+                        Date: ${formattedDateTime}
+                    </div>
+                    
+                    <div class="letter-content">
+                        <p>To,</p>
+                        <p><b>${name}</b></p>
+                        <p>S/o <b>${fatherName}</b></p>
+                        <p>Email: ${email}</p>
+                        <p>Phone: ${contactNumber}</p>
+                        
+                        <p><i><b>Subject:</b></i> <b>Confirmation of Industrial Training</b></p>
+                        
+                        <p><b>Dear ${name},</b></p>
+                        <p>We are pleased to inform you that you have been selected for the Industrial Training Program at Garment Textile Pvt. Ltd. The details of your training are mentioned below:</p>
+                        
+                        <p><i><b>Training Details</b></i></p>
+                        <p>
+                            Training Location: Varanasi<br>
+                            Work Location: Varanasi<br>
+                            Reporting Date: <b>${formattedReportingDate}</b><br>
+                            Training Duration: <b>9 AM : 5 PM</b>
+                        </p>
+                        
+                        <p><b>${accommodationText}</b></p>
+                        
+                        <p><b>Documents Required at Reporting</b></p>
+                        <p>Please bring the following documents (originals + one self-attested copy):</p>
+                        <ol>
+                            <li>Resume or Cover Letter</li>
+                            <li>2 Passport-size Photograph (same as uploaded)</li>
+                            <li>College ID Card or Marksheet(s)</li>
+                            <li>Aadhar Card / Valid Government ID</li>
+                            <li>Permanent Account Number (<b>PAN</b>) Card</li>
+                            <li>Current Bank's Passbook</li>
+                        </ol>
+                        
+                        <p>We believe this training will be beneficial for your technical growth and professional development. Please reach out to us at the above contact for any clarifications.</p>
+                        <p>We look forward to your presence and contribution.</p>
+                        
+                        <div class="letter-signature">
+                            <p>Warm regards,</p>
+                            <p><b>Manish Gupta</b></p>
+                            <p><b>+91 95194 43625</b></p>
+                            <p><b>Garment Textile Private Limited</b></p>
+                            <p>Soyepur Bazar, Pandeypur, Varanasi, Uttar Pradesh</p>
+                            <p><b>221007</b></p>
+                        </div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="note">
+                        <i>Note: This is a system-generated letter and does not require a physical signature.</i>
+                    </div>
                 </div>
-                
-                <p><strong>Date: ${formattedLetterDate}</strong></p>
-                
-                <div class="letter-body">
-                    <p><strong>To,</strong><br>  
-                    <strong>${name}</strong><br>
-                    S/o ${fatherName}<br>  
-                    Email: ${email}<br>
-                    Phone: ${contactNumber}</p>
-                    
-                    <p><strong><em>Subject: Confirmation of Industrial Training</em></strong></p>
-                    
-                    <p><strong>Dear ${name},</strong></p>
-                    
-                    <p>We are pleased to inform you that you have been selected for the Industrial Training Program at Garment Textile Pvt. Ltd. The details of your training are mentioned below:</p>
-                    
-                    <p><strong><em>Training Details</em></strong><br>
-                    Training Location: Varanasi<br>   
-                    Work Location: Varanasi<br> 
-                    Reporting Date: ${formattedReportingDate}<br>  
-                    Training Duration: 9 AM : 5 PM</p>
-                    
-                    <p><strong>${accommodationText}</strong></p>
-                    
-                    <p><strong>Documents Required at Reporting</strong><br>
-                    Please bring the following documents (originals + one self-attested copy):</p>
-                    
-                    <ol>
-                        <li>Resume or Cover Letter</li>
-                        <li>2 Passport-size Photograph (same as uploaded)</li>
-                        <li>College ID Card or Marksheet(s)</li>
-                        <li>Aadhar Card / Valid Government ID</li>
-                        <li>Permanent Account Number (PAN) Card</li>
-                        <li>Current Bank’s Passbook</li>
-                    </ol>
-                    
-                    <p>We believe this training will be beneficial for your technical growth and professional development. Please reach out to us at the above contact for any clarifications.</p>
-                    
-                    <p>We look forward to your presence and contribution.</p>
-                </div>
-                
-                <div class="signature">
-                    <p>Warm regards,</p>
-                    <p><strong>Manish Kumar Gupta</strong></p>
-                    <p>Human Resources (HR) & BS</p>
-                    <p><strong>Garment Textile Private Limited</strong></p>
-                    <p>Soyepur Bazar, Pandeypur, Varanasi, Uttar Pradesh</p>
-                    <p><strong>221007</strong></p>
-                </div>
-                
-                <p class="note">*Note: This is a system-generated letter and does not require a physical signature.*</p>
             `;
             
-            // Display the preview
             document.getElementById('letterPreview').innerHTML = letterHTML;
         }
         
-        function downloadPDF() {
-            const { jsPDF } = window.jspdf;
+        // Download as PDF
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            // Validate form
+            const name = document.getElementById('name').value;
+            const fatherName = document.getElementById('fatherName').value;
+            const email = document.getElementById('email').value;
+            const contactNumber = document.getElementById('contactNumber').value;
             
-            // Generate preview if not already generated
-            if (document.getElementById('letterPreview').innerHTML.includes('fa-file-alt')) {
-                generatePreview();
+            if (!name || !fatherName || !email || !contactNumber) {
+                alert('Please fill in all required fields before downloading.');
+                return;
             }
             
             // Create PDF
-            const doc = new jsPDF('p', 'mm', 'a4');
-            const element = document.getElementById('letterPreview');
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'pt', 'letter');
             
-            html2canvas(element, {
+            // Capture the letter content
+            html2canvas(document.querySelector('.letter'), {
                 scale: 2,
                 useCORS: true,
                 logging: false
             }).then(canvas => {
-                const imgData = canvas.toDataURL('image/jpeg', 0.95);
-                const imgWidth = 210; // A4 width in mm
-                const pageHeight = 297; // A4 height in mm
+                const imgData = canvas.toDataURL('image/png');
+                
+                // Add image to PDF
+                const imgWidth = 8.5 * 72; // 8.5" in points (1" = 72 points)
                 const imgHeight = canvas.height * imgWidth / canvas.width;
                 
-                let heightLeft = imgHeight;
-                let position = 0;
+                // Calculate margins (1" = 72 points)
+                const margin = 72;
+                const contentWidth = imgWidth - 2 * margin;
+                const contentHeight = imgHeight - 2 * margin;
                 
-                doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-                
-                // Add more pages if needed
-                while (heightLeft >= 0) {
-                    position = heightLeft - imgHeight;
-                    doc.addPage();
-                    doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-                }
+                // Add image with 1" margins
+                doc.addImage(imgData, 'PNG', margin, margin, contentWidth, contentHeight);
                 
                 // Save the PDF
-                const fileName = `Training_Letter_${document.getElementById('name').value || 'Candidate'}.pdf`;
-                doc.save(fileName);
-                
-                // Show success message
-                alert(`PDF "${fileName}" downloaded successfully!`);
+                doc.save(`Training_Letter_${name.replace(/\s+/g, '_')}.pdf`);
             });
-        }
-        
-        function formatDate(dateString) {
-            if (!dateString) return '';
-            
-            const date = new Date(dateString);
-            const day = date.getDate().toString().padStart(2, '0');
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const year = date.getFullYear();
-            
-            return `${day}/${month}/${year}`;
-        }
+        });
     </script>
 </body>
 </html>
