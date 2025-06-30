@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Letter Generator - Garment Textile Pvt. Ltd.</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .form-container {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .preview-container {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .accommodation-options {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        
+        .accommodation-option {
+            margin-bottom: 10px;
+        }
+        
+        .accommodation-option:last-child {
+            margin-bottom: 0;
+        }
+        
+        .accommodation-option label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        
+        .accommodation-option input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        #downloadBtn {
+            background: #27ae60;
+        }
+        
+        #downloadBtn:hover {
+            background: #219653;
+        }
+        
+        .preview-content {
+            flex: 1;
+            border: 1px solid #eee;
+            padding: 20px;
+            overflow: auto;
+            background: #fcfdfe;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .letter {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        .letter-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .letter-header h3 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .letter-header p {
+            margin: 3px 0;
+            color: #555;
+        }
+        
+        .letter-body {
+            margin-bottom: 30px;
+        }
+        
+        .letter-body p {
+            margin-bottom: 15px;
+        }
+        
+        .letter-body ul {
+            margin: 15px 0 15px 30px;
+        }
+        
+        .letter-body ul li {
+            margin-bottom: 8px;
+        }
+        
+        .signature {
+            margin-top: 40px;
+        }
+        
+        .signature p {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .note {
+            font-style: italic;
+            color: #777;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Garment Textile Private Limited</h1>
+            <p>Training Letter Generator</p>
+        </header>
+        
+        <div class="content">
+            <div class="form-container">
+                <h2>Training Details</h2>
+                <form id="trainingForm">
+                    <div class="form-group">
+                        <label for="letterDate">Letter Date:</label>
+                        <input type="date" id="letterDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" placeholder="Enter full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fatherName">Father's Name:</label>
+                        <input type="text" id="fatherName" placeholder="Enter father's name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" placeholder="Enter email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactNumber">Contact Number:</label>
+                        <input type="tel" id="contactNumber" placeholder="Enter phone number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reportingDate">Reporting Date:</label>
+                        <input type="date" id="reportingDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Accommodation Option:</label>
+                        <div class="accommodation-options">
+                            <div class="accommodation-option">
+                                <label>
+                                    <input type="radio" name="accommodation" value="basic" id="basicOption">
+                                    Basic Accommodation (PG room at ₹2,750/month)
+                                </label>
+                            </div>
+                            <div class="accommodation-option">
+                                <label>
+                                    <input type="radio" name="accommodation" value="none" id="noneOption" checked>
+                                    No Accommodation Needed (₹700 administrative fee)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="previewBtn">Preview Letter</button>
+                    <button type="button" id="downloadBtn">Download as PDF</button>
+                </form>
+            </div>
+            
+            <div class="preview-container">
+                <h2>Letter Preview</h2>
+                <div class="preview-content">
+                    <div id="letterPreview" class="letter">
+                        <!-- Preview content will be generated here -->
+                        <p class="note">Fill out the form and click "Preview Letter" to generate your training letter</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Garment Textile Private Limited | Soyepur Bazar, Pandeypur, Varanasi, Uttar Pradesh 221007</p>
+            <p>+91 79707 74361 | garmenttxtpvtltd@hotmail.com</p>
+        </footer>
+    </div>
+
+    <script>
+        // Set today's date as default for letter and reporting date
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            
+            // Set letter date to today
+            document.getElementById('letterDate').value = formattedDate;
+            
+            // Set reporting date to 7 days from today
+            const reportingDate = new Date();
+            reportingDate.setDate(today.getDate() + 7);
+            document.getElementById('reportingDate').value = reportingDate.toISOString().split('T')[0];
+            
+            // Set up event listeners
+            document.getElementById('previewBtn').addEventListener('click', generatePreview);
+            document.getElementById('downloadBtn').addEventListener('click', downloadPDF);
+        });
+        
+        function generatePreview() {
+            // Get form values
+            const letterDate = document.getElementById('letterDate').value;
+            const name = document.getElementById('name').value;
+            const fatherName = document.getElementById('fatherName').value;
+            const email = document.getElementById('email').value;
+            const contactNumber = document.getElementById('contactNumber').value;
+            const reportingDate = document.getElementById('reportingDate').value;
+            
+            // Get accommodation option
+            let accommodationText = '';
+            if (document.getElementById('basicOption').checked) {
+                accommodationText = 'If you do not have a place to stay in Varanasi during the training period, then we can arrange a personal PG room at a Minimal Charge of ₹2,750.';
+            } else {
+                accommodationText = 'You have not opted for any accommodation. A ₹700 training facility and administrative fee will apply.';
+            }
+            
+            // Format dates
+            const formattedLetterDate = formatDate(letterDate);
+            const formattedReportingDate = formatDate(reportingDate);
+            
+            // Generate the letter HTML
+            const letterHTML = `
+                <div class="letter-header">
+                    <h3>Garment Textile Private Limited</h3>
+                    <p>Soyepur Bazar, Pandeypur, Varanasi, Uttar Pradesh</p>
+                    <p>221007</p>
+                    <p>+91 79707 74361  garmenttxtpvtltd@hotmail.com</p>
+                </div>
+                
+                <p>Date: ${formattedLetterDate}</p>
+                
+                <div class="letter-body">
+                    <p>To,<br>  
+                    ${name}<br>
+                    S/o ${fatherName}<br>  
+                    Email: ${email}<br>
+                    Phone: ${contactNumber}</p>
+                    
+                    <p>Subject: Confirmation of Industrial Training</p>
+                    
+                    <p>Dear ${name},</p>
+                    
+                    <p>We are pleased to inform you that you have been selected for the Industrial Training Program at Garment Textile Pvt. Ltd. The details of your training are mentioned below:</p>
+                    
+                    <p><strong>Training Details</strong><br>
+                    Training Location: Varanasi<br>   
+                    Work Location: Varanasi<br> 
+                    Reporting Date: ${formattedReportingDate}<br>  
+                    Training Duration: 9 AM : 5 PM</p>
+                    
+                    <p>${accommodationText}</p>
+                    
+                    <p><strong>Documents Required at Reporting</strong><br>
+                    Please bring the following documents (originals + one self-attested copy):</p>
+                    
+                    <ul>
+                        <li>Resume or Cover Letter</li>
+                        <li>2 Passport-size Photograph (same as uploaded)</li>
+                        <li>College ID Card or Marksheet(s)</li>
+                        <li>Aadhar Card / Valid Government ID</li>
+                        <li>Permanent Account Number (PAN) Card</li>
+                        <li>Current Bank's Passbook</li>
+                    </ul>
+                    
+                    <p>We believe this training will be beneficial for your technical growth and professional development. Please reach out to us at the above contact for any clarifications.</p>
+                    
+                    <p>We look forward to your presence and contribution.</p>
+                </div>
+                
+                <div class="signature">
+                    <p>Warm regards,</p>
+                    <p>Manish Gupta</p>
+                    <p>+91 95194 43625</p>
+                    <p>Garment Textile Private Limited</p>
+                    <p>Soyepur Bazar, Pandeypur, Varanasi, Uttar Pradesh</p>
+                    <p>221007</p>
+                </div>
+                
+                <p class="note">*Note: This is a system-generated letter and does not require a physical signature.*</p>
+            `;
+            
+            // Display the preview
+            document.getElementById('letterPreview').innerHTML = letterHTML;
+        }
+        
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            
+            // Generate preview if not already generated
+            if (document.getElementById('letterPreview').innerHTML.includes('note')) {
+                generatePreview();
+            }
+            
+            // Create PDF
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const element = document.getElementById('letterPreview');
+            
+            html2canvas(element, {
+                scale: 2,
+                useCORS: true,
+                logging: false
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                const imgWidth = 210; // A4 width in mm
+                const pageHeight = 297; // A4 height in mm
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                
+                let heightLeft = imgHeight;
+                let position = 0;
+                
+                doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                
+                // Add more pages if needed
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    doc.addPage();
+                    doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                // Save the PDF
+                doc.save(`Training_Letter_${document.getElementById('name').value || 'Candidate'}.pdf`);
+            });
+        }
+        
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            
+            const date = new Date(dateString);
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            
+            return `${day}/${month}/${year}`;
+        }
+    </script>
+</body>
+</html>
