@@ -187,14 +187,14 @@
                 doc.text(text, textX, yPos, { align });
             }
 
-            // Header
-            addText('Garment Textile Private Limited', pageWidth / 2, y, { style: 'bold', size: 10, align: 'right' });
+            // Header (अब लेफ्ट अलाइन्ड)
+            addText('Garment Textile Private Limited', margin, y, { style: 'bold', size: 10, align: 'left' });
             y += lineSpacing;
-            addText('Soyepur Bazar, Pandeypur, Varanasi, Uttar Pradesh - 221007', pageWidth / 2, y, { size: 8, align: 'right' });
+            addText('Soyepur Bazar, Pandeypur, Varanasi, Uttar Pradesh - 221007', margin, y, { size: 8, align: 'left' });
             y += smallLineSpacing;
-            addText('+91 79707 74361 | garmenttxtpvtltd@hotmail.com', pageWidth / 2, y, { size: 8, align: 'right' });
+            addText('+91 79707 74361 | garmenttxtpvtltd@hotmail.com', margin, y, { size: 8, align: 'left' });
             y += lineSpacing;
-
+            
             // Horizontal Line
             doc.setDrawColor(0);
             doc.setLineWidth(0.01); 
